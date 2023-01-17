@@ -35,7 +35,7 @@ class NationView(ListCreateAPIView):
       }  
       try: 
         nation = Nation.objects.get(nationId=nationId)
-        message = 'Upadte a Nation successful!'
+        message = 'Update a Nation successful!'
         serializer = NationSerializer(nation,data=data)
       except Nation.DoesNotExist:
         message = 'Create a new Nation successful!'
