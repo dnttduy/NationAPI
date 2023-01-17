@@ -16,10 +16,10 @@ class NationView(ListCreateAPIView):
     def get_queryset(self):
       return Nation.objects.all()
 
-    def utm2lonlat(self, d, i, j, zone):
+    def utm2lonlat(self, i, j, zone):
       srcProj = Proj(proj="utm", zone=zone, ellps="clrk66", units="m")
       dstProj = Proj(proj='longlat', ellps='WGS84', datum='WGS84')
-      lonlat = transform(srcProj, dstProj, d * j, d * i)
+      lonlat = transform(srcProj, dstProj, j, i)
       return lonlat
 
     def create(self, request, *args, **kwargs):
@@ -27,7 +27,7 @@ class NationView(ListCreateAPIView):
       utms = request.data['utms']
       lonlats = []
       for utm in utms:
-        newlonlat = [i for i in self.utm2lonlat(1000,utm[0],utm[1],20)]
+        newlonlat = [i for i in self.utm2lonlat(utm[0],utm[1],20)]
         lonlats.append(newlonlat)
       data = {
         "nationId" : nationId,
