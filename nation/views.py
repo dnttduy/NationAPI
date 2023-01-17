@@ -24,7 +24,7 @@ class NationView(ListCreateAPIView):
 
     def create(self, request, *args, **kwargs):
       nationId = request.data['nationId']
-      utms = request.data['lonlats']
+      utms = request.data['utms']
       lonlats = []
       for utm in utms:
         newlonlat = [i for i in self.utm2lonlat(1000,utm[0],utm[1],20)]

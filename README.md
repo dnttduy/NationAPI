@@ -1,4 +1,8 @@
 # NationAPI
+change port 8000 to 7000
+python manage.py runserver 7000
+
+
 list nations
 ![image](https://user-images.githubusercontent.com/106653507/212842642-a2448f83-8d4c-48e9-b1b9-a70fa2a88198.png)
 
