@@ -9,7 +9,7 @@ from nation.serializers import NationSerializer
 
 from pyproj import Proj, transform
 
-class ListCreateNationView(ListCreateAPIView):
+class NationView(ListCreateAPIView):
     model = Nation
     serializer_class = NationSerializer
 
@@ -35,22 +35,24 @@ class ListCreateNationView(ListCreateAPIView):
       }  
       try: 
         nation = Nation.objects.get(nationId=nationId)
+        message = 'Upadte a Nation successful!'
         serializer = NationSerializer(nation,data=data)
       except Nation.DoesNotExist:
+        message = 'Create a new Nation successful!'
         serializer = NationSerializer(data=data)
 
       if serializer.is_valid():
           serializer.save()
 
           return JsonResponse({
-              'message': 'Create a new Nation successful!'
+              'message': message
           }, status=status.HTTP_201_CREATED)
 
       return JsonResponse({
-          'message': 'Create a new Nation unsuccessful!'
+          'message': 'Create/Update a Nation unsuccessful!'
       }, status=status.HTTP_400_BAD_REQUEST)
 
-class RetrieveUpdateDeleteNationView(RetrieveUpdateDestroyAPIView):
+class RetrieveNationView(RetrieveUpdateDestroyAPIView):
     model = Nation
     serializer_class = NationSerializer
 

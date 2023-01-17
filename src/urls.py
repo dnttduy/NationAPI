@@ -18,6 +18,6 @@ from django.urls import path
 from nation import views
 
 urlpatterns = [
-    path('nations', views.ListCreateNationView.as_view()),
-    path('nations/<str:nationId>', views.RetrieveUpdateDeleteNationView.as_view()),
+    path('nations', views.NationView.as_view()),
+    path('nations/<str:nationId>', views.RetrieveNationView.as_view()),
 ]
