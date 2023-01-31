@@ -45,7 +45,8 @@ class NationView(ListCreateAPIView):
           serializer.save()
 
           return JsonResponse({
-              'message': message
+              'message': message,
+              'data': serializer.data
           }, status=status.HTTP_201_CREATED)
 
       return JsonResponse({
@@ -57,14 +58,11 @@ class RetrieveNationView(RetrieveUpdateDestroyAPIView):
     serializer_class = NationSerializer
 
     def retrieve(self, request, *args, **kwargs):
-
-      nationId = kwargs.get('nationId')
-      nation = Nation.objects.get(nationId=nationId)
+      nation = get_object_or_404(Nation, nationId=kwargs.get('nationId'))
       serializer = NationSerializer(nation)
-    
-      return JsonResponse(
-        serializer.data
-        , status=status.HTTP_200_OK)
+      return JsonResponse({
+        'data': serializer.data
+      }, status=status.HTTP_200_OK)
 
     def put(self, request, *args, **kwargs):
         nation = get_object_or_404(Nation, nationId=kwargs.get('nationId'))
